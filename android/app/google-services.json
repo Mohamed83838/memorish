@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "334815621639",
+    "project_id": "gemini-9a969",
+    "storage_bucket": "gemini-9a969.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334815621639:android:82f01d06e7f1510dd370a2",
+        "android_client_info": {
+          "package_name": "com.FrajDev.gemini"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334815621639-bbr0kqou1itqs5a6jqt19gmdvj5jr9v2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtpcDh5MNsaYpJyMKTt043IeBMYuoJQQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334815621639-bbr0kqou1itqs5a6jqt19gmdvj5jr9v2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
