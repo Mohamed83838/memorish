@@ -7,7 +7,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 class GeminiPrompt {
 
 
-final  String apiKey="AIzaSyCZqwfEcnA_nr5-nm0zJgL2yN1WVggGQ9o";
+final  String apiKey="google gemini api key";
 
   Future<Response?> promptText(String description,bool title,String type) async {
     try {
@@ -38,7 +38,7 @@ Future<String?> generatestory() async {
     String memories =await FirestoreService().getUseroriginalMemories();
     final model = GenerativeModel(model: 'gemini-1.5-pro', apiKey: apiKey); // Specify the correct model ID
 
-    final content = [Content.text("rules no comment no additional thought Generate a coherent story from all these memories ${memories}")];
+    final content = [Content.text("rules no comment no additional thought  Generate a coherent story from all these memories respect the order${memories}")];
     final response = await model.generateContent(content);
 
 
