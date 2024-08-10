@@ -6,6 +6,8 @@ import 'package:gemini/Api/Firebase/Firestore/FirestoreService.dart';
 import 'package:gemini/Api/Firebase/storage/FirebaseStorage.dart';
 import 'package:gemini/Api/Gemini/gemini.dart';
 import 'package:gemini/Models/Memory.dart';
+import 'package:gemini/Ui/Home/MyMemoriesScreen/MyMemoriesScreen.dart';
+import 'package:gemini/Ui/Home/Navbar/NavBarScreen.dart';
 import 'package:gemini/Ui/Home/NewMemoryScreen/component/component.dart';
 import 'package:gemini/utils/VisualTools.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -88,6 +90,7 @@ class _NewMemoryScreenState extends State<NewMemoryScreen> {
     String? signatureurl = await _saveSignature();
     if (res != null) {
       final memory = Memory(
+        originalmemory: descriptionController.text,
         ownerid: FirebaseAuth.instance.currentUser!.uid,
         favorite: false,
         userphoto: user!.photoUrl,
@@ -107,10 +110,14 @@ class _NewMemoryScreenState extends State<NewMemoryScreen> {
       try {
         await firestoreService.saveMemory(
             FirebaseAuth.instance.currentUser!.uid, memory);
+
         setState(() {
           loading = false;
         });
-        Navigator.of(context).pop(true);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Navbarscreen()),
+        );
       } catch (e) {
         print('Error saving memory: $e');
       }
@@ -133,7 +140,10 @@ class _NewMemoryScreenState extends State<NewMemoryScreen> {
               ignoring:  loading,
               child: IconButton(
                 onPressed: () {
-                  Navigator.of(context).pop(false);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Navbarscreen()),
+                  );
                 },
                 icon: Icon(Icons.arrow_back),
               ),
@@ -183,42 +193,46 @@ class _NewMemoryScreenState extends State<NewMemoryScreen> {
                       fontSize: 18),
                 ),
                 SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selected = MemoryType.story;
-                          });
-                        },
-                        child: MemoryTypeWidget(
-                            "story.png", selected == MemoryType.story)),
-                    GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selected = MemoryType.musiclyrics;
-                          });
-                        },
-                        child: MemoryTypeWidget(
-                            "music.png", selected == MemoryType.musiclyrics)),
-                    GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selected = MemoryType.poetry;
-                          });
-                        },
-                        child: MemoryTypeWidget(
-                            "poetry.png", selected == MemoryType.poetry)),
-                    GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selected = MemoryType.joke;
-                          });
-                        },
-                        child: MemoryTypeWidget(
-                            "joke.png", selected == MemoryType.joke)),
-                  ],
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selected = MemoryType.story;
+                            });
+                          },
+                          child: MemoryTypeWidget(
+                              "story.png", selected == MemoryType.story)),
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selected = MemoryType.musiclyrics;
+                            });
+                          },
+                          child: MemoryTypeWidget(
+                              "music.png", selected == MemoryType.musiclyrics)),
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selected = MemoryType.poetry;
+                            });
+                          },
+                          child: MemoryTypeWidget(
+                              "poetry.png", selected == MemoryType.poetry)),
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selected = MemoryType.joke;
+                            });
+                          },
+                          child: MemoryTypeWidget(
+                              "joke.png", selected == MemoryType.joke)),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 10),
                 Row(

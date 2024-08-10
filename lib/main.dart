@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gemini/Ui/Home/Navbar/NavBarScreen.dart';
 import 'package:gemini/Ui/Identification/IdentificationScreen.dart';
+import 'package:gemini/Ui/MyBookStory/MyBookStoryScreen.dart';
 import 'package:gemini/Ui/WelcomeScreen/WelcomeScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

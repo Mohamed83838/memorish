@@ -29,7 +29,7 @@ class _MyMemoriesScreenState extends State<MyMemoriesScreen> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => NewMemoryScreen()),
             );
@@ -70,14 +70,14 @@ class _MyMemoriesScreenState extends State<MyMemoriesScreen> {
           centerTitle: true,
         ),
         body: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
+          padding: EdgeInsets.only(left: 20,right: 20),
+          child: ListView(
             children: [
               Container(
                 padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: HexColor("80C4E9"),
+                  color: Colors.orange
                 ),
                 child: Text(
                   "Are you here to relive cherished memories or to create new unforgettable experiences ??? ",
@@ -130,18 +130,16 @@ class _MyMemoriesScreenState extends State<MyMemoriesScreen> {
                     if (state is MemoryLoading) {
                       return Center(child: CircularProgressIndicator());
                     } else if (state is MemoryLoaded) {
-                      return ListView.builder(
-                        itemCount: state.memories.length,
-                        itemBuilder: (context, index) {
-                          final memory = state.memories[index];
+                      return Column(
+                        children: state.memories.map((memory) {
                           return GestureDetector(
                             onTap: () async {
                               // Navigate to Openmemoryscreen and wait for result
                               final result = await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        Openmemoryscreen(memory: memory)),
+                                  builder: (context) => Openmemoryscreen(memory: memory),
+                                ),
                               );
                               await Future.delayed(Duration(seconds: 1));
                               setState(() {});
@@ -149,15 +147,16 @@ class _MyMemoriesScreenState extends State<MyMemoriesScreen> {
                               if (result) {
                                 // Reload memories
                                 BlocProvider.of<MemoryBloc>(context).add(
-                                    LoadUserMemories(FirebaseAuth
-                                        .instance.currentUser!.uid));
+                                  LoadUserMemories(FirebaseAuth.instance.currentUser!.uid),
+                                );
                                 setState(() {});
                               }
                             },
                             child: HomeMemory(context, memory),
                           );
-                        },
+                        }).toList(),
                       );
+
                     } else if (state is MemoryError) {
                       return Center(
                           child: Text(

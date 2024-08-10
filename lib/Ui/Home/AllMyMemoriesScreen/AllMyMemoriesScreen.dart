@@ -40,6 +40,7 @@ TextEditingController _search=TextEditingController();
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HexColor("EBF4F6"),
+
       appBar: AppBar(
         backgroundColor: HexColor("EBF4F6"),
         leading: IconButton(
@@ -90,7 +91,6 @@ TextEditingController _search=TextEditingController();
                 decoration: InputDecoration(
                   hintText: 'Search...',
                   hintStyle: TextStyle(color: Colors.black),
-
                   prefixIcon: Icon(Icons.search, color: Colors.black),
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,

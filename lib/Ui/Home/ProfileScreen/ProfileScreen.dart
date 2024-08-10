@@ -5,6 +5,7 @@ import 'package:gemini/Api/Firebase/Firestore/FirestoreService.dart';
 import 'package:gemini/Models/User.dart';
 import 'package:gemini/Ui/Home/AllMyMemoriesScreen/AllMyMemoriesScreen.dart';
 import 'package:gemini/Ui/Home/sharedmemories/SharedMemoriesScreen.dart';
+import 'package:gemini/Ui/MyBookStory/MyBookStoryScreen.dart';
 import 'package:gemini/Ui/WelcomeScreen/WelcomeScreen.dart';
 import 'package:gemini/utils/VisualTools.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -142,6 +143,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => Sharedmemoriesscreen()),
+                        );
+                        // Handle tapping on Shared Memories
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.book, color: Colors.blue),
+                      title: Text('Your Story'),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyBookScreenStory()),
                         );
                         // Handle tapping on Shared Memories
                       },

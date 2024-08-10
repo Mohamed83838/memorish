@@ -27,6 +27,29 @@ class FirestoreService {
     }
     return null;
   }
+  Future<String?> getuserstory() async {
+    try {
+      String uid=FirebaseAuth.instance.currentUser!.uid;
+      DocumentSnapshot doc = await _firestore.collection('users').doc(uid).get();
+      if (doc.exists) {
+        return UserModel.fromMap(doc.data() as Map<String, dynamic>).story;
+      }
+    } catch (e) {
+      print("Error retrieving user data: $e");
+    }
+    return "";
+  }
+
+  Future<void> updatestory(String story) async {
+    try {
+      DocumentReference docRef = await _firestore.collection('users').doc(FirebaseAuth.instance.currentUser!.uid);
+      // Update the document with its own UID
+      await docRef.update({'story': story});
+      print("Memory saved and updated with ID successfully.");
+    } catch (e) {
+      print("Error saving memory: $e");
+    }
+  }
 
   // Method to save memory in a sub-collection inside the user document
   Future<void> saveMemory(String uid, Memory memory) async {
@@ -127,6 +150,24 @@ class FirestoreService {
 
       }
       print("Memories retrieved successfully.");
+    } catch (e) {
+      print("Error retrieving memories: $e");
+    }
+    return memories;
+  }
+
+  Future<String> getUseroriginalMemories() async {
+    String memories ="";
+    int counter =0;
+    try {
+      QuerySnapshot snapshot = await _firestore.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('memories') .orderBy('date', descending: true).get();
+      for (var doc in snapshot.docs) {
+        Memory m=Memory.fromMap(doc.data() as Map<String, dynamic>);
+        if(m.ownerid==FirebaseAuth.instance.currentUser!.uid){
+          memories += "story ${counter} ${m.originalmemory}";
+
+        }
+      }
     } catch (e) {
       print("Error retrieving memories: $e");
     }

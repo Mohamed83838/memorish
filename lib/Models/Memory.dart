@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Memory {
   String title;
+  String originalmemory;
   String ownerid;
   String? username;
   String? userphoto;
@@ -16,6 +17,7 @@ class Memory {
   String generated;
   Memory({
     required this.ownerid,
+    required this.originalmemory,
     required this.favorite,
     this.username,
     this.userphoto,
@@ -34,6 +36,7 @@ class Memory {
   factory Memory.fromMap(Map<String, dynamic> map) {
     return Memory(
       ownerid: map["ownerid"],
+      originalmemory: map["originalmemory"],
       favorite: map["favorite"],
       username: map["username"],
       userphoto: map["user-photo"],
@@ -52,6 +55,7 @@ class Memory {
   // Method to convert a Memory object to a map
   Map<String, dynamic> toMap() {
     return {
+      "originalmemory":originalmemory,
       "ownerid":ownerid,
       "username":username,
       "user-photo":userphoto,

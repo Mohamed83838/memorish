@@ -1,4 +1,6 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gemini/Api/Firebase/Firestore/FirestoreService.dart';
 import 'package:gemini/Models/GeminiResponse.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
@@ -30,4 +32,22 @@ final  String apiKey="AIzaSyCZqwfEcnA_nr5-nm0zJgL2yN1WVggGQ9o";
       return null;
     }
   }
+
+Future<String?> generatestory() async {
+  try {
+    String memories =await FirestoreService().getUseroriginalMemories();
+    final model = GenerativeModel(model: 'gemini-1.5-pro', apiKey: apiKey); // Specify the correct model ID
+
+    final content = [Content.text("rules no comment no additional thought Generate a coherent story from all these memories ${memories}")];
+    final response = await model.generateContent(content);
+
+
+
+    final textResponse = response.text;
+   FirestoreService().updatestory(textResponse!);
+    return textResponse;
+  } on Exception catch (e) {
+    return null;
+  }
+}
 }
